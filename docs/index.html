@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Network Heartbeat Monitor</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page-plane);
+    color: var(--text-primary);
+    transition: background 0.2s, color 0.2s;
+  }
+  .viz-root {
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --status-good:      #0ca30c;
+    --status-warning:   #fab219;
+    --status-serious:   #ec835a;
+    --status-critical:  #d03b3b;
+    --success-text:    #006300;
+  }
+  :root:where(:not([data-theme="light"])) .viz-root {
+    @media (prefers-color-scheme: dark) {
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --status-good:      #0ca30c;
+      --status-warning:   #fab219;
+      --status-serious:   #ec835a;
+      --status-critical:  #d03b3b;
+      --success-text:    #0ca30c;
+    }
+  }
+  .viz-root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page-plane:     #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --status-good:      #0ca30c;
+    --status-warning:   #fab219;
+    --status-serious:   #ec835a;
+    --status-critical:  #d03b3b;
+    --success-text:    #0ca30c;
+  }
+
+  .page { max-width: 980px; margin: 0 auto; padding: 32px 20px 60px; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .subtitle { color: var(--text-secondary); font-size: 14px; margin: 0; }
+  .controls { display: flex; gap: 8px; align-items: center; }
+  button.chip {
+    font: inherit; font-size: 13px; padding: 7px 12px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary);
+    cursor: pointer;
+  }
+  button.chip:hover { background: var(--gridline); }
+
+  .banner {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: color-mix(in srgb, var(--status-warning) 14%, var(--surface-1));
+    border: 1px solid color-mix(in srgb, var(--status-warning) 45%, var(--border));
+    border-radius: 10px; padding: 12px 14px; margin-bottom: 20px; font-size: 13.5px; color: var(--text-primary);
+  }
+  .banner .dot { flex: 0 0 auto; font-size: 15px; line-height: 1.3; }
+  .banner strong { display: block; margin-bottom: 2px; }
+  .banner p { margin: 0; color: var(--text-secondary); }
+
+  .summary { display: flex; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+  .stat-tile {
+    flex: 1; min-width: 110px; background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .stat-tile .value { font-size: 26px; font-weight: 600; line-height: 1.1; }
+  .stat-tile .label { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
+  .stat-tile.up .value { color: var(--status-good); }
+  .stat-tile.down .value { color: var(--status-critical); }
+  .stat-tile.unknown .value { color: var(--text-muted); }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 26px;
+  }
+  .tile {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+    border-left: 4px solid var(--baseline);
+  }
+  .tile.up { border-left-color: var(--status-good); }
+  .tile.down { border-left-color: var(--status-critical); }
+  .tile.unknown { border-left-color: var(--text-muted); }
+  .tile-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .tile-name { font-weight: 600; font-size: 15px; }
+  .tile-tag { color: var(--text-muted); font-size: 12px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px;
+  }
+  .badge.up { color: var(--status-good); background: color-mix(in srgb, var(--status-good) 14%, transparent); }
+  .badge.down { color: var(--status-critical); background: color-mix(in srgb, var(--status-critical) 14%, transparent); }
+  .badge.unknown { color: var(--text-muted); background: color-mix(in srgb, var(--text-muted) 16%, transparent); }
+  .tile-row { display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px; color: var(--text-secondary); }
+  .tile-row .v { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 26px; }
+  table.data-table th, table.data-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--gridline); }
+  table.data-table th { color: var(--text-secondary); font-weight: 600; font-size: 12.5px; }
+  table.data-table td.v { font-variant-numeric: tabular-nums; }
+
+  footer { color: var(--text-muted); font-size: 12.5px; border-top: 1px solid var(--gridline); padding-top: 14px; }
+  footer p { margin: 4px 0; }
+  .legend { display: flex; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .dot2 { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="viz-root page" id="root">
+
+  <header>
+    <div>
+      <h1>Network Heartbeat Monitor</h1>
+      <p class="subtitle">6 standalone networks report over Telegram roughly every 4h (±15min via telco). A device is flagged DOWN once it misses that window by more than the grace threshold. Synced by a GitHub Actions job.</p>
+    </div>
+    <div class="controls">
+      <button class="chip" id="viewToggle" type="button">Table view</button>
+      <button class="chip" id="themeToggle" type="button">Dark mode</button>
+    </div>
+  </header>
+
+  <div id="pendingBanner" class="banner hidden">
+    <span class="dot">⚠️</span>
+    <div>
+      <strong>Awaiting first sync</strong>
+      <p>No successful sync has completed yet. Statuses below are placeholders until the first GitHub Actions run succeeds.</p>
+    </div>
+  </div>
+
+  <div id="staleBanner" class="banner hidden">
+    <span class="dot">⏱️</span>
+    <div>
+      <strong>Sync is running late</strong>
+      <p id="staleText"></p>
+    </div>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="legend">
+    <span><span class="dot2" style="background:var(--status-good)"></span>Up — heartbeat within window</span>
+    <span><span class="dot2" style="background:var(--status-critical)"></span>Down — heartbeat overdue</span>
+    <span><span class="dot2" style="background:var(--text-muted)"></span>Unknown — no data yet</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <table class="data-table hidden" id="table">
+    <thead><tr><th>Network</th><th>Status</th><th>Last heartbeat</th><th>Time since</th><th>Next expected by</th></tr></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <footer id="footerInfo"></footer>
+</div>
+
+<script type="application/json" id="device-state">
+{
+  "devices": {
+    "DC":     {"label": "TG DC",     "lastSeenIso": null},
+    "ISI":    {"label": "TG ISI",    "lastSeenIso": null},
+    "OPS":    {"label": "TG OPS",    "lastSeenIso": null},
+    "NET":    {"label": "TG NET",    "lastSeenIso": null},
+    "Master": {"label": "TG Master", "lastSeenIso": null},
+    "RPS":    {"label": "TG RPS",    "lastSeenIso": null}
+  },
+  "heartbeatIntervalMinutes": 240,
+  "thresholdMinutes": 270,
+  "lastPollIso": null,
+  "lastPollOk": false,
+  "lastPollNote": "No sync has run yet."
+}
+</script>
+
+<script>
+(function () {
+  var state = JSON.parse(document.getElementById('device-state').textContent);
+  var root = document.getElementById('root');
+  var tableMode = false;
+  var deviceOrder = Object.keys(state.devices);
+
+  function fmtDateTime(iso) {
+    if (!iso) return 'Never';
+    var d = new Date(iso);
+    return d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function fmtDuration(ms) {
+    if (ms < 0) ms = 0;
+    var mins = Math.floor(ms / 60000);
+    var h = Math.floor(mins / 60);
+    var m = mins % 60;
+    if (h <= 0) return m + 'm';
+    return h + 'h ' + m + 'm';
+  }
+
+  function computeStatus(device, now) {
+    if (!device.lastSeenIso) return 'unknown';
+    var elapsedMs = now - new Date(device.lastSeenIso).getTime();
+    var thresholdMs = state.thresholdMinutes * 60000;
+    return elapsedMs <= thresholdMs ? 'up' : 'down';
+  }
+
+  function render() {
+    var now = Date.now();
+    var counts = { up: 0, down: 0, unknown: 0 };
+    var grid = document.getElementById('grid');
+    var tableBody = document.getElementById('tableBody');
+    grid.innerHTML = '';
+    tableBody.innerHTML = '';
+
+    deviceOrder.forEach(function (id) {
+      var d = state.devices[id];
+      var status = computeStatus(d, now);
+      counts[status]++;
+      var elapsed = d.lastSeenIso ? now - new Date(d.lastSeenIso).getTime() : null;
+      var nextBy = d.lastSeenIso ? new Date(new Date(d.lastSeenIso).getTime() + state.thresholdMinutes * 60000) : null;
+      var statusLabel = status === 'up' ? 'Up' : (status === 'down' ? 'Down' : 'Unknown');
+      var icon = status === 'up' ? '✓' : (status === 'down' ? '✕' : '?');
+
+      var tile = document.createElement('div');
+      tile.className = 'tile ' + status;
+      tile.innerHTML =
+        '<div class="tile-head">' +
+          '<div><div class="tile-name">' + d.label + '</div><div class="tile-tag">' + id + '</div></div>' +
+          '<span class="badge ' + status + '">' + icon + ' ' + statusLabel + '</span>' +
+        '</div>' +
+        '<div class="tile-row"><span>Last heartbeat</span><span class="v">' + fmtDateTime(d.lastSeenIso) + '</span></div>' +
+        '<div class="tile-row"><span>Time since</span><span class="v">' + (elapsed === null ? '—' : fmtDuration(elapsed)) + '</span></div>' +
+        '<div class="tile-row"><span>Next expected by</span><span class="v">' + (nextBy ? fmtDateTime(nextBy.toISOString()) : '—') + '</span></div>';
+      grid.appendChild(tile);
+
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + d.label + '</td>' +
+        '<td>' + icon + ' ' + statusLabel + '</td>' +
+        '<td class="v">' + fmtDateTime(d.lastSeenIso) + '</td>' +
+        '<td class="v">' + (elapsed === null ? '—' : fmtDuration(elapsed)) + '</td>' +
+        '<td class="v">' + (nextBy ? fmtDateTime(nextBy.toISOString()) : '—') + '</td>';
+      tableBody.appendChild(tr);
+    });
+
+    var summary = document.getElementById('summary');
+    summary.innerHTML =
+      '<div class="stat-tile up"><div class="value">' + counts.up + '</div><div class="label">Up</div></div>' +
+      '<div class="stat-tile down"><div class="value">' + counts.down + '</div><div class="label">Down</div></div>' +
+      '<div class="stat-tile unknown"><div class="value">' + counts.unknown + '</div><div class="label">Unknown</div></div>';
+
+    document.getElementById('pendingBanner').classList.toggle('hidden', !!state.lastPollIso);
+
+    var staleBanner = document.getElementById('staleBanner');
+    if (state.lastPollIso) {
+      var sinceSyncMs = now - new Date(state.lastPollIso).getTime();
+      if (sinceSyncMs > (90 * 60000)) {
+        staleBanner.classList.remove('hidden');
+        document.getElementById('staleText').textContent =
+          'Last successful sync was ' + fmtDuration(sinceSyncMs) + ' ago. The GitHub Actions schedule may be paused or failing — statuses shown may be out of date.';
+      } else {
+        staleBanner.classList.add('hidden');
+      }
+    } else {
+      staleBanner.classList.add('hidden');
+    }
+
+    var footer = document.getElementById('footerInfo');
+    footer.innerHTML =
+      '<p>Down threshold: ' + state.thresholdMinutes + ' minutes without a heartbeat (expected interval ~' + state.heartbeatIntervalMinutes + ' min ± telco jitter).</p>' +
+      '<p>Last sync attempt: ' + (state.lastPollIso ? fmtDateTime(state.lastPollIso) + (state.lastPollOk ? ' (ok)' : ' (failed)') : 'never') + (state.lastPollNote ? ' — ' + state.lastPollNote : '') + '</p>' +
+      '<p>This page recomputes status live in your browser from the last synced data.</p>';
+  }
+
+  document.getElementById('viewToggle').addEventListener('click', function () {
+    tableMode = !tableMode;
+    document.getElementById('grid').classList.toggle('hidden', tableMode);
+    document.getElementById('table').classList.toggle('hidden', !tableMode);
+    this.textContent = tableMode ? 'Card view' : 'Table view';
+  });
+
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    this.textContent = isDark ? 'Dark mode' : 'Light mode';
+  });
+
+  render();
+  setInterval(render, 60000);
+})();
+</script>
+</body>
+</html>

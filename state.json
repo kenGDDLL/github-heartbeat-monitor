@@ -1,0 +1,16 @@
+{
+  "devices": {
+    "DC": {"label": "TG DC", "lastSeenIso": null},
+    "ISI": {"label": "TG ISI", "lastSeenIso": null},
+    "OPS": {"label": "TG OPS", "lastSeenIso": null},
+    "NET": {"label": "TG NET", "lastSeenIso": null},
+    "Master": {"label": "TG Master", "lastSeenIso": null},
+    "RPS": {"label": "TG RPS", "lastSeenIso": null}
+  },
+  "heartbeatIntervalMinutes": 240,
+  "thresholdMinutes": 270,
+  "lastUpdateId": 0,
+  "lastPollIso": null,
+  "lastPollOk": false,
+  "lastPollNote": "No sync has run yet."
+}

@@ -1,0 +1,49 @@
+name: Telegram heartbeat sync
+
+on:
+  schedule:
+    # Every 30 minutes. Heartbeats arrive every ~4h, so this gives fast
+    # detection without hammering GitHub's free Actions minutes.
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}   # lets you trigger a manual run from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: heartbeat-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run sync
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+        run: python scripts/sync.py
+
+      - name: Commit updated state + dashboard
+        run: |
+          git config user.name "heartbeat-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state.json docs/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync heartbeat state [skip ci]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
