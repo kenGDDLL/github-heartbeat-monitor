@@ -31,7 +31,7 @@ DASHBOARD_PATH = os.path.join(REPO_ROOT, "docs", "index.html")
 
 DEVICE_IDS = ["DC", "ISI", "OPS", "NET", "Master", "RPS"]
 DEVICE_LABELS = {d: "TG " + d for d in DEVICE_IDS}
-HEARTBEAT_PATTERN = re.compile(r"^TG\s+(\S+)\s+is\s+alive", re.IGNORECASE)
+HEARTBEAT_PATTERN = re.compile(r"TG\s+(\S+)\s+is\s+alive", re.IGNORECASE)
 
 
 def now_utc():
@@ -197,7 +197,7 @@ def main():
                 if msg.get("chat", {}).get("id") != chat_id:
                     continue
                 text = (msg.get("text") or "").strip()
-                m = HEARTBEAT_PATTERN.match(text)
+                m = HEARTBEAT_PATTERN.search(text)
                 if not m:
                     continue
                 raw_id = m.group(1)
