@@ -191,7 +191,7 @@ def main():
                 break
             for item in results:
                 max_update_id = max(max_update_id, item["update_id"])
-                msg = item.get("message") or item.get("edited_message")
+                msg = (item.get("message") or item.get("edited_message") or item.get("channel_post") or item.get("edited_channel_post"))
                 if not msg:
                     continue
                 if msg.get("chat", {}).get("id") != chat_id:
