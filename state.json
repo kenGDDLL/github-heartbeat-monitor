@@ -17,24 +17,24 @@
     },
     "NET": {
       "label": "TG NET",
-      "lastSeenIso": "2026-08-13T18:44:43Z",
+      "lastSeenIso": "2026-08-13T18:49:08Z",
       "lastKnownStatus": "up"
     },
     "Master": {
       "label": "TG Master",
-      "lastSeenIso": "2026-08-13T18:44:33Z",
+      "lastSeenIso": "2026-08-13T18:48:58Z",
       "lastKnownStatus": "up"
     },
     "RPS": {
       "label": "TG RPS",
-      "lastSeenIso": "2026-08-13T14:49:28Z",
+      "lastSeenIso": "2026-08-13T18:45:30Z",
       "lastKnownStatus": "up"
     }
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199967020,
-  "lastPollIso": "2026-08-13T18:45:22Z",
+  "lastUpdateId": 199967023,
+  "lastPollIso": "2026-08-13T19:00:38Z",
   "lastPollOk": true,
   "lastPollNote": "Processed new heartbeat(s)."
 }
