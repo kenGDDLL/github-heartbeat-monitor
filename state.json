@@ -2,39 +2,39 @@
   "devices": {
     "DC": {
       "label": "TG DC",
-      "lastSeenIso": "2026-08-16T10:44:43Z",
+      "lastSeenIso": "2026-08-16T14:44:27Z",
       "lastKnownStatus": "up"
     },
     "ISI": {
       "label": "TG ISI",
-      "lastSeenIso": "2026-08-16T10:44:49Z",
+      "lastSeenIso": "2026-08-16T14:44:23Z",
       "lastKnownStatus": "up"
     },
     "OPS": {
       "label": "TG OPS",
-      "lastSeenIso": "2026-08-16T10:44:32Z",
+      "lastSeenIso": "2026-08-16T14:44:46Z",
       "lastKnownStatus": "up"
     },
     "NET": {
       "label": "TG NET",
-      "lastSeenIso": "2026-08-16T10:50:56Z",
+      "lastSeenIso": "2026-08-16T14:44:32Z",
       "lastKnownStatus": "up"
     },
     "Master": {
       "label": "TG Master",
-      "lastSeenIso": "2026-08-16T10:44:33Z",
+      "lastSeenIso": "2026-08-16T14:44:27Z",
       "lastKnownStatus": "up"
     },
     "RPS": {
       "label": "TG RPS",
-      "lastSeenIso": "2026-08-16T10:44:38Z",
+      "lastSeenIso": "2026-08-16T14:44:46Z",
       "lastKnownStatus": "up"
     }
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199967133,
-  "lastPollIso": "2026-08-16T14:30:30Z",
+  "lastUpdateId": 199967139,
+  "lastPollIso": "2026-08-16T14:45:22Z",
   "lastPollOk": true,
-  "lastPollNote": "No new heartbeats this cycle."
+  "lastPollNote": "Processed new heartbeat(s)."
 }
