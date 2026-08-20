@@ -7,7 +7,7 @@
     },
     "ISI": {
       "label": "TG ISI",
-      "lastSeenIso": "2026-08-20T10:44:35Z",
+      "lastSeenIso": "2026-08-20T10:49:02Z",
       "lastKnownStatus": "up"
     },
     "OPS": {
@@ -33,8 +33,8 @@
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199967298,
-  "lastPollIso": "2026-08-20T10:47:14Z",
+  "lastUpdateId": 199967299,
+  "lastPollIso": "2026-08-20T11:00:37Z",
   "lastPollOk": true,
   "lastPollNote": "Processed new heartbeat(s)."
 }
