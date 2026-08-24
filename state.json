@@ -13,7 +13,7 @@
     "OPS": {
       "label": "TG OPS",
       "lastSeenIso": "2026-08-24T06:49:10Z",
-      "lastKnownStatus": "up"
+      "lastKnownStatus": "down"
     },
     "NET": {
       "label": "TG NET",
@@ -34,7 +34,7 @@
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
   "lastUpdateId": 199967460,
-  "lastPollIso": "2026-08-24T11:15:22Z",
+  "lastPollIso": "2026-08-24T11:30:31Z",
   "lastPollOk": true,
   "lastPollNote": "No new heartbeats this cycle."
 }
