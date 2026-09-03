@@ -2,8 +2,8 @@
   "devices": {
     "DC": {
       "label": "TG DC",
-      "lastSeenIso": "2026-09-03T11:21:50Z",
-      "lastKnownStatus": "down"
+      "lastSeenIso": "2026-09-03T16:52:43Z",
+      "lastKnownStatus": "up"
     },
     "ISI": {
       "label": "TG ISI",
@@ -33,8 +33,8 @@
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199967858,
-  "lastPollIso": "2026-09-03T16:45:26Z",
+  "lastUpdateId": 199967859,
+  "lastPollIso": "2026-09-03T17:00:44Z",
   "lastPollOk": true,
-  "lastPollNote": "No new heartbeats this cycle."
+  "lastPollNote": "Processed new heartbeat(s)."
 }
