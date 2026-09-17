@@ -27,14 +27,14 @@
     },
     "RPS": {
       "label": "TG RPS",
-      "lastSeenIso": "2026-09-17T07:21:29Z",
-      "lastKnownStatus": "down"
+      "lastSeenIso": "2026-09-17T12:40:08Z",
+      "lastKnownStatus": "up"
     }
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199968396,
-  "lastPollIso": "2026-09-17T12:30:29Z",
+  "lastUpdateId": 199968397,
+  "lastPollIso": "2026-09-17T12:45:23Z",
   "lastPollOk": true,
   "lastPollNote": "Processed new heartbeat(s)."
 }
