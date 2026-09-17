@@ -22,8 +22,8 @@
     },
     "Master": {
       "label": "TG Master",
-      "lastSeenIso": "2026-09-17T07:21:59Z",
-      "lastKnownStatus": "down"
+      "lastSeenIso": "2026-09-17T12:25:25Z",
+      "lastKnownStatus": "up"
     },
     "RPS": {
       "label": "TG RPS",
@@ -33,8 +33,8 @@
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199968393,
-  "lastPollIso": "2026-09-17T12:15:22Z",
+  "lastUpdateId": 199968396,
+  "lastPollIso": "2026-09-17T12:30:29Z",
   "lastPollOk": true,
-  "lastPollNote": "No new heartbeats this cycle."
+  "lastPollNote": "Processed new heartbeat(s)."
 }
