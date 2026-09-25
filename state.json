@@ -3,7 +3,7 @@
     "DC": {
       "label": "TG DC",
       "lastSeenIso": "2026-09-25T00:30:27Z",
-      "lastKnownStatus": "up"
+      "lastKnownStatus": "down"
     },
     "ISI": {
       "label": "TG ISI",
@@ -34,7 +34,7 @@
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
   "lastUpdateId": 199968659,
-  "lastPollIso": "2026-09-25T04:45:21Z",
+  "lastPollIso": "2026-09-25T05:00:32Z",
   "lastPollOk": true,
   "lastPollNote": "No new heartbeats this cycle."
 }
