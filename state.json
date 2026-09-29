@@ -34,7 +34,7 @@
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
   "lastUpdateId": 199968816,
-  "lastPollIso": "2026-09-29T07:30:31Z",
+  "lastPollIso": "2026-09-29T07:45:24Z",
   "lastPollOk": true,
   "lastPollNote": "No new heartbeats this cycle."
 }
