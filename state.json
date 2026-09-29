@@ -12,12 +12,12 @@
     },
     "OPS": {
       "label": "TG OPS",
-      "lastSeenIso": "2026-09-29T06:07:39Z",
-      "lastKnownStatus": "down"
+      "lastSeenIso": "2026-09-29T13:47:36Z",
+      "lastKnownStatus": "up"
     },
     "NET": {
       "label": "TG NET",
-      "lastSeenIso": "2026-09-29T09:59:37Z",
+      "lastSeenIso": "2026-09-29T13:47:27Z",
       "lastKnownStatus": "up"
     },
     "Master": {
@@ -33,8 +33,8 @@
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199968825,
-  "lastPollIso": "2026-09-29T13:45:22Z",
+  "lastUpdateId": 199968827,
+  "lastPollIso": "2026-09-29T13:49:50Z",
   "lastPollOk": true,
-  "lastPollNote": "No new heartbeats this cycle."
+  "lastPollNote": "Processed new heartbeat(s)."
 }
