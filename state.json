@@ -7,7 +7,7 @@
     },
     "ISI": {
       "label": "TG ISI",
-      "lastSeenIso": "2026-09-30T05:13:45Z",
+      "lastSeenIso": "2026-09-30T09:12:19Z",
       "lastKnownStatus": "up"
     },
     "OPS": {
@@ -27,14 +27,14 @@
     },
     "RPS": {
       "label": "TG RPS",
-      "lastSeenIso": "2026-09-30T05:07:21Z",
+      "lastSeenIso": "2026-09-30T09:05:55Z",
       "lastKnownStatus": "up"
     }
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199968858,
-  "lastPollIso": "2026-09-30T09:00:40Z",
+  "lastUpdateId": 199968860,
+  "lastPollIso": "2026-09-30T09:15:21Z",
   "lastPollOk": true,
   "lastPollNote": "Processed new heartbeat(s)."
 }
