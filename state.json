@@ -34,7 +34,7 @@
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
   "lastUpdateId": 199969401,
-  "lastPollIso": "2026-10-14T10:15:21Z",
-  "lastPollOk": true,
-  "lastPollNote": "No new heartbeats this cycle."
+  "lastPollIso": "2026-10-14T10:30:27Z",
+  "lastPollOk": false,
+  "lastPollNote": "Poll failed: <urlopen error [Errno 101] Network is unreachable>"
 }
