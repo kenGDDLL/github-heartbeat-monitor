@@ -17,7 +17,7 @@
     },
     "NET": {
       "label": "TG NET",
-      "lastSeenIso": "2026-11-05T16:30:51Z",
+      "lastSeenIso": "2026-11-05T20:22:10Z",
       "lastKnownStatus": "up"
     },
     "Master": {
@@ -33,8 +33,8 @@
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199970272,
-  "lastPollIso": "2026-11-05T20:15:28Z",
+  "lastUpdateId": 199970273,
+  "lastPollIso": "2026-11-05T20:30:37Z",
   "lastPollOk": true,
-  "lastPollNote": "No new heartbeats this cycle."
+  "lastPollNote": "Processed new heartbeat(s)."
 }
