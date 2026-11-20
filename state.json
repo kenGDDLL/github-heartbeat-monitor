@@ -2,12 +2,12 @@
   "devices": {
     "DC": {
       "label": "TG DC",
-      "lastSeenIso": "2026-11-20T16:22:29Z",
+      "lastSeenIso": "2026-11-20T20:12:38Z",
       "lastKnownStatus": "up"
     },
     "ISI": {
       "label": "TG ISI",
-      "lastSeenIso": "2026-11-20T16:22:21Z",
+      "lastSeenIso": "2026-11-20T20:12:28Z",
       "lastKnownStatus": "up"
     },
     "OPS": {
@@ -17,24 +17,24 @@
     },
     "NET": {
       "label": "TG NET",
-      "lastSeenIso": "2026-11-20T16:22:24Z",
+      "lastSeenIso": "2026-11-20T20:12:27Z",
       "lastKnownStatus": "up"
     },
     "Master": {
       "label": "TG Master",
-      "lastSeenIso": "2026-11-20T16:22:27Z",
+      "lastSeenIso": "2026-11-20T20:12:20Z",
       "lastKnownStatus": "up"
     },
     "RPS": {
       "label": "TG RPS",
-      "lastSeenIso": "2026-11-20T16:22:20Z",
+      "lastSeenIso": "2026-11-20T20:12:35Z",
       "lastKnownStatus": "up"
     }
   },
   "heartbeatIntervalMinutes": 240,
   "thresholdMinutes": 270,
-  "lastUpdateId": 199970838,
-  "lastPollIso": "2026-11-20T20:15:25Z",
-  "lastPollOk": false,
-  "lastPollNote": "Poll failed: <urlopen error [Errno 104] Connection reset by peer>"
+  "lastUpdateId": 199970843,
+  "lastPollIso": "2026-11-20T20:30:33Z",
+  "lastPollOk": true,
+  "lastPollNote": "Processed new heartbeat(s)."
 }
